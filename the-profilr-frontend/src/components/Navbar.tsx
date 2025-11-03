@@ -94,8 +94,8 @@ export const Navbar = () => {
                     </a>
                   ))}
                   <a
+                    Link to="/login" 
                     rel="noreferrer noopener"
-                    href="/login" 
                     target="_blank"
                     className={`w-[110px] border ${buttonVariants({
                       variant: "secondary",
