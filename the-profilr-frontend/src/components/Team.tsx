@@ -10,16 +10,17 @@ import {
 import { Facebook, Instagram, Linkedin } from "lucide-react";
 import shauryaImg from "../assets/shaurya.jpg";
 import palakImg from "../assets/palak.png";
-import naninaImg from "../assets/naina.jpg"
+import nainaImg from "../assets/naina.jpg";
 
 interface TeamProps {
   imageUrl: string;
   name: string;
   position: string;
-  socialNetworks: SociaNetworkslProps[];
+  description: string; // ✅ new field
+  socialNetworks: SocialNetworkProps[];
 }
 
-interface SociaNetworkslProps {
+interface SocialNetworkProps {
   name: string;
   url: string;
 }
@@ -28,7 +29,9 @@ const teamList: TeamProps[] = [
   {
     imageUrl: shauryaImg,
     name: "Shaurya Singh",
-    position: "Full Stack Development",
+    position: "Full Stack Developer",
+    description:
+      "Built the frontend and backend using React, Node.js, and Express, including authentication and API integration.",
     socialNetworks: [
       {
         name: "Linkedin",
@@ -43,30 +46,34 @@ const teamList: TeamProps[] = [
   {
     imageUrl: palakImg,
     name: "Palak Bisht",
-    position: "Tech Lead",
+    position: "AI Engineer",
+    description:
+      "Developed AI agents for automated data profiling and visualization, integrating intelligent analytics into the platform.",
     socialNetworks: [
       {
         name: "Linkedin",
-        url: "https://www.linkedin.com/in//",
+        url: "https://www.linkedin.com/in/palak-bisht-476a21293/",
       },
       {
         name: "Instagram",
-        url: "https://www.instagram.com/",
+        url: "https://www.instagram.com/palak_bisht2006/",
       },
     ],
   },
   {
-    imageUrl: naninaImg,
+    imageUrl: nainaImg,
     name: "Naina Srivastava",
-    position: "",
+    position: "FastAPI Developer",
+    description:
+      "Built the FastAPI backend responsible for generating automated data profiling and visualization reports with high performance.",
     socialNetworks: [
       {
         name: "Linkedin",
-        url: "https://www.linkedin.com/in//",
+        url: "https://www.linkedin.com/in/naina-srivastava-8300811a8/",
       },
       {
         name: "Instagram",
-        url: "https://www.instagram.com/",
+        url: "https://www.instagram.com/naina_sriv/",
       },
     ],
   },
@@ -81,14 +88,13 @@ export const Team = () => {
         return <Facebook size="20" />;
       case "Instagram":
         return <Instagram size="20" />;
+      default:
+        return null;
     }
   };
 
   return (
-    <section
-      id="team"
-      className="container py-24 sm:py-32"
-    >
+    <section id="team" className="container py-24 sm:py-32">
       <h2 className="text-3xl md:text-4xl font-bold text-center">
         <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
           Our Dedicated{" "}
@@ -97,14 +103,13 @@ export const Team = () => {
       </h2>
 
       <p className="mt-4 mb-10 text-xl text-muted-foreground text-center">
-        Meet the passionate individuals behind this project — each contributing
+        Meet the passionate individuals behind this project - each contributing
         their expertise in design, development, and innovation.
       </p>
 
-      {/* 3 cards centered nicely */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-10 justify-items-center">
         {teamList.map(
-          ({ imageUrl, name, position, socialNetworks }: TeamProps) => (
+          ({ imageUrl, name, position, description, socialNetworks }) => (
             <Card
               key={name}
               className="bg-muted/50 relative mt-8 flex flex-col justify-center items-center"
@@ -121,15 +126,13 @@ export const Team = () => {
                 </CardDescription>
               </CardHeader>
 
+              {/* ✅ Custom description here */}
               <CardContent className="text-center pb-2">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Voluptas, alias.
-                </p>
+                <p>{description}</p>
               </CardContent>
 
               <CardFooter>
-                {socialNetworks.map(({ name, url }: SociaNetworkslProps) => (
+                {socialNetworks.map(({ name, url }) => (
                   <div key={name}>
                     <a
                       rel="noreferrer noopener"

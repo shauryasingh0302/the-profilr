@@ -78,7 +78,7 @@ export const Navbar = () => {
               <SheetContent side={"left"}>
                 <SheetHeader>
                   <SheetTitle className="font-bold text-xl">
-                    Shadcn/React
+                    The Profilr
                   </SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col justify-center items-center gap-2 mt-4">
@@ -94,9 +94,8 @@ export const Navbar = () => {
                     </a>
                   ))}
                   <a
-                    Link to="/login" 
+                     href="/login" 
                     rel="noreferrer noopener"
-                    target="_blank"
                     className={`w-[110px] border ${buttonVariants({
                       variant: "secondary",
                     })}`}
@@ -127,8 +126,7 @@ export const Navbar = () => {
           <div className="hidden md:flex gap-2">
             <a
               rel="noreferrer noopener"
-              href="/login" 
-              target="_blank"
+              href="/login"
               className={`border ${buttonVariants({ variant: "secondary" })}`}
             >
               <User className="mr-2 w-5 h-5" /> 
