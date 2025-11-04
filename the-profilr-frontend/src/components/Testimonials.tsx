@@ -65,14 +65,14 @@ export const Testimonials = () => {
 
     if (!newReview.name || !newReview.comment || !newReview.role) {
       setError("Please fill in all required fields.");
-      setSuccessMessage(""); // Ensure success is cleared
+      setSuccessMessage(""); 
       return;
     }
 
     try {
       setSubmitting(true);
       setError("");
-      setSuccessMessage(""); // Clear both before API call
+      setSuccessMessage(""); 
 
       const response = await fetch(`${API_BASE_URL}/api/reviews`, {
         method: "POST",
@@ -87,14 +87,14 @@ export const Testimonials = () => {
         return;
       }
       
-      // SUCCESS HANDLING
+      // SUCCESS HANDLING - This is the crucial block that needs to run cleanly
       setError(""); 
-      setSuccessMessage("Review added successfully!"); // Set success message
+      setSuccessMessage("Review added successfully!"); 
       
       setEndorsements((prev) => [data.review, ...prev]);
       setNewReview({ name: "", role: "", comment: "" });
 
-      // Optional: Clear success message after a few seconds
+      // Clear success message after a few seconds
       setTimeout(() => setSuccessMessage(""), 5000); 
 
     } catch (err) {
@@ -102,7 +102,8 @@ export const Testimonials = () => {
       setError("Unable to connect to the server.");
       setSuccessMessage("");
     } finally {
-      setSubmitting(false);
+      // Keep this for network errors, but ensure it's not fighting the success path
+      setSubmitting(false); 
     }
   };
 
