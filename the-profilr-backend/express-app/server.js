@@ -16,16 +16,9 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
-    credentials: true
   })
 );
 
@@ -42,6 +35,7 @@ app.get("/api/reviews", async (req, res) => {
     const reviews = await Review.find().sort({ createdAt: -1 });
     res.status(200).json(reviews);
   } catch (error) {
+    console.error("Error fetching reviews:", error.message);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -49,24 +43,16 @@ app.get("/api/reviews", async (req, res) => {
 app.post("/api/reviews", async (req, res) => {
   try {
     const { name, role, comment } = req.body;
-
     if (!name || !role || !comment) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const review = new Review({ name, role, comment });
-    await review.save();
-
-    return res.status(201).json({ message: "Review added", review });
+    const review = await Review.create({ name, role, comment });
+    res.status(201).json({ message: "Review added successfully", review });
   } catch (error) {
     console.error("Error adding review:", error.message);
-    return res.status(500).json({ message: "Failed to add review", error: error.message });
+    res.status(500).json({ message: "Server error while adding review" });
   }
-});
-
-
-app.use((req, res) => {
-  res.status(404).json({ message: "Route not found" });
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
