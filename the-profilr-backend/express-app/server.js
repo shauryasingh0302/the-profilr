@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectDB } from "./src/config/db.js";
 import { Review } from "./src/models/Review.js";
+const app = express();
+
 
 app.use(
   cors({
@@ -17,7 +19,7 @@ app.use(
 
 
 dotenv.config();
-const app = express();
+
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
