@@ -3,18 +3,17 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectDB } from "./src/config/db.js";
 import { Review } from "./src/models/Review.js";
-import cors from "cors";
 
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://the-profilr.onrender.com",
+      process.env.FRONTEND_URL
     ],
-    methods: ["GET", "POST"],
-    credentials: true,
+    credentials: true
   })
 );
+
 
 
 dotenv.config();
@@ -30,7 +29,6 @@ app.get("/", (req, res) => {
   res.send("Profilr backend is running");
 });
 
-// --- CREATE REVIEW ---
 app.post("/api/reviews", async (req, res) => {
   try {
     const { name, role, comment } = req.body;
@@ -47,7 +45,6 @@ app.post("/api/reviews", async (req, res) => {
   }
 });
 
-// --- GET ALL REVIEWS ---
 app.get("/api/reviews", async (req, res) => {
   try {
     const reviews = await Review.find().sort({ createdAt: -1 });
@@ -58,4 +55,4 @@ app.get("/api/reviews", async (req, res) => {
 });
 
 
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

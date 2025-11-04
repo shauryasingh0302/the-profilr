@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+
+
 interface EndorsementProps {
   _id?: string;
   image: string;
@@ -19,13 +21,9 @@ interface EndorsementProps {
 }
 
 export const Testimonials = () => {
-  // ✅ Default avatar
   const defaultAvatar =
     "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-
-  // ✅ Use dynamic backend URL
-  const API_BASE =
-    import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [endorsements, setEndorsements] = useState<EndorsementProps[]>([]);
   const [newReview, setNewReview] = useState({
@@ -37,11 +35,10 @@ export const Testimonials = () => {
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // ✅ Fetch reviews on mount
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/reviews`);
+        const res = await fetch(`${API_BASE_URL}/api/reviews`);
         if (!res.ok) throw new Error("Failed to fetch reviews");
         const data = await res.json();
         setEndorsements(data);
@@ -53,9 +50,8 @@ export const Testimonials = () => {
       }
     };
     fetchReviews();
-  }, [API_BASE]);
+  }, [API_BASE_URL]);
 
-  // ✅ Handle input change
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -63,7 +59,6 @@ export const Testimonials = () => {
     setNewReview((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ✅ Handle form submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -76,7 +71,7 @@ export const Testimonials = () => {
       setSubmitting(true);
       setError("");
 
-      const response = await fetch(`${API_BASE}/api/reviews`, {
+      const response = await fetch(`${API_BASE_URL}/api/reviews`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newReview),
@@ -89,7 +84,6 @@ export const Testimonials = () => {
         return;
       }
 
-      // ✅ Successfully added
       setEndorsements((prev) => [data.review, ...prev]);
       setNewReview({ name: "", role: "", comment: "" });
     } catch (err) {
