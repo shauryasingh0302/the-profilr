@@ -38,7 +38,6 @@ export const HeroCards = () => {
 
       <Card className="absolute right-0 top-10 w-80 flex flex-col justify-center items-center drop-shadow-xl shadow-black/10 dark:shadow-white/10">
         <CardHeader className="mt-8 flex justify-center items-center pb-2">
-          {/* Using a tech icon instead of an avatar */}
           <div className="absolute -top-12 p-3 rounded-full w-24 h-24 aspect-square flex items-center justify-center bg-accent border-4 border-white dark:border-slate-900">
             <Zap className="w-12 h-12 text-primary" />
           </div>

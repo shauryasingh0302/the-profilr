@@ -67,7 +67,7 @@ export const Services = () => {
         <img
           src={dataImage}
           className="w-[300px] md:w-[500px] lg:w-[600px] object-contain"
-          alt="Illustration representing project features"
+          alt=""
         />
       </div>
     </section>

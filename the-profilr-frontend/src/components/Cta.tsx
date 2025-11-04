@@ -22,7 +22,6 @@ export const Cta = () => {
           </p>
         </div>
 
-        {/* ✅ Flex layout with responsive gaps */}
         <div className="flex flex-col sm:flex-row gap-4 lg:col-start-2">
           <a href="/login" className="w-full sm:w-auto">
             <Button className="w-full sm:w-auto">Start Profiling</Button>

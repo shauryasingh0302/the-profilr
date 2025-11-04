@@ -31,7 +31,7 @@ const pricingList: PricingProps[] = [
     price: 0,
     description:
       "Ideal for beginners to explore basic data profiling and visualisation features.",
-    buttonText: "Start for Free",
+    buttonText: <a href="/login">Start for Free</a>,
     benefitList: [
       "Upload upto 2 datasets",
       "Basic data profiling report",
@@ -45,7 +45,7 @@ const pricingList: PricingProps[] = [
     price: 199,
     description:
       "Perfect for students and small teams who need deeper insights and faster processing.",
-    buttonText: "Start Free Trial",
+    buttonText: <a href="/login">Start Free Trial</a>,
     benefitList: [
       "Upto 10 datasets",
       "Advanced profiling (correlation, missing values, etc.)",
@@ -60,7 +60,7 @@ const pricingList: PricingProps[] = [
     price: 499,
     description:
       "Best for academics or research projects needing high-speed analysis and collaboration.",
-    buttonText: "Contact Us",
+    buttonText: <a href="#team">Contact Us</a>,
     benefitList: [
       "Unlimited Datasets",
       "Team collaboration",
