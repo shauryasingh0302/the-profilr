@@ -83,7 +83,10 @@ export const Testimonials = () => {
         setError(data.message || "Failed to submit review.");
         return;
       }
-
+      
+      // FIX: Clear the error state explicitly on success
+      setError(""); 
+      
       setEndorsements((prev) => [data.review, ...prev]);
       setNewReview({ name: "", role: "", comment: "" });
     } catch (err) {
