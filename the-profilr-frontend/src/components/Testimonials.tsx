@@ -33,6 +33,7 @@ export const Testimonials = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // <-- ADDED
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -64,12 +65,14 @@ export const Testimonials = () => {
 
     if (!newReview.name || !newReview.comment || !newReview.role) {
       setError("Please fill in all required fields.");
+      setSuccessMessage(""); // Ensure success is cleared
       return;
     }
 
     try {
       setSubmitting(true);
       setError("");
+      setSuccessMessage(""); // Clear both before API call
 
       const response = await fetch(`${API_BASE_URL}/api/reviews`, {
         method: "POST",
@@ -80,17 +83,24 @@ export const Testimonials = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || "Failed to submit review.");
+        setError(data.message || "Failed to add review.");
         return;
       }
       
+      // SUCCESS HANDLING
       setError(""); 
+      setSuccessMessage("Review added successfully!"); // Set success message
       
       setEndorsements((prev) => [data.review, ...prev]);
       setNewReview({ name: "", role: "", comment: "" });
+
+      // Optional: Clear success message after a few seconds
+      setTimeout(() => setSuccessMessage(""), 5000); 
+
     } catch (err) {
       console.error("Error submitting review:", err);
       setError("Unable to connect to the server.");
+      setSuccessMessage("");
     } finally {
       setSubmitting(false);
     }
@@ -204,7 +214,9 @@ export const Testimonials = () => {
                 />
               </div>
 
-              {error && (
+              {successMessage ? (
+                <p className="text-sm text-green-500 font-medium">{successMessage}</p>
+              ) : error && (
                 <p className="text-sm text-destructive font-medium">{error}</p>
               )}
 
