@@ -17,26 +17,32 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-      const cleanOrigin = origin.replace(/\/$/, "");
-      if (allowedOrigins.includes(cleanOrigin)) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
+    methods: ["GET", "POST"],
     credentials: true,
   })
 );
 
-app.options("*", cors());
 app.use(express.json());
+
 await connectDB();
 
 app.get("/", (req, res) => {
-  res.send("Profilr backend is running successfully");
+  res.status(200).send("Profilr backend running successfully");
+});
+
+app.get("/api/reviews", async (req, res) => {
+  try {
+    const reviews = await Review.find().sort({ createdAt: -1 });
+    res.status(200).json(reviews);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 app.post("/api/reviews", async (req, res) => {
@@ -52,13 +58,10 @@ app.post("/api/reviews", async (req, res) => {
   }
 });
 
-app.get("/api/reviews", async (req, res) => {
-  try {
-    const reviews = await Review.find().sort({ createdAt: -1 });
-    res.json(reviews);
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
+app.all("*", (req, res) => {
+  res.status(404).json({ message: "Route not found" });
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
