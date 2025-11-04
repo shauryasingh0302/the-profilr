@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://the-profilr.onrender.com",
+  "https://the-profilr.onrender.com"
 ];
 
 app.use(
@@ -24,7 +24,8 @@ app.use(
       }
     },
     methods: ["GET", "POST"],
-    credentials: true,
+    allowedHeaders: ["Content-Type"],
+    credentials: true
   })
 );
 
@@ -53,12 +54,12 @@ app.post("/api/reviews", async (req, res) => {
     }
     const review = await Review.create({ name, role, comment });
     res.status(201).json({ message: "Review added", review });
-  } catch (error) {
+  } catch {
     res.status(500).json({ message: "Server error" });
   }
 });
 
-app.all("/*", (req, res) => {
+app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
