@@ -58,10 +58,8 @@ app.post("/api/reviews", async (req, res) => {
   }
 });
 
-app.all("*", (req, res) => {
+app.all("/*", (req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
