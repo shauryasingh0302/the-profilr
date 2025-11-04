@@ -20,20 +20,20 @@ interface PricingProps {
   popular: PopularPlanType;
   price: number;
   description: string;
-  buttonText: string;
+  buttonText: string | JSX.Element; // ✅ allows both text and JSX
   benefitList: string[];
 }
 
 const pricingList: PricingProps[] = [
   {
     title: "Basic",
-    popular: 0,
+    popular: PopularPlanType.NO,
     price: 0,
     description:
       "Ideal for beginners to explore basic data profiling and visualisation features.",
     buttonText: <a href="/login">Start for Free</a>,
     benefitList: [
-      "Upload upto 2 datasets",
+      "Upload up to 2 datasets",
       "Basic data profiling report",
       "Local file upload (CSV/Excel)",
       "Community support",
@@ -41,13 +41,13 @@ const pricingList: PricingProps[] = [
   },
   {
     title: "Pro",
-    popular: 1,
+    popular: PopularPlanType.YES,
     price: 199,
     description:
       "Perfect for students and small teams who need deeper insights and faster processing.",
     buttonText: <a href="/login">Start Free Trial</a>,
     benefitList: [
-      "Upto 10 datasets",
+      "Up to 10 datasets",
       "Advanced profiling (correlation, missing values, etc.)",
       "MongoDB Cloud Storage",
       "FastAPI-powered backend",
@@ -56,7 +56,7 @@ const pricingList: PricingProps[] = [
   },
   {
     title: "Enterprise",
-    popular: 0,
+    popular: PopularPlanType.NO,
     price: 499,
     description:
       "Best for academics or research projects needing high-speed analysis and collaboration.",
@@ -80,6 +80,7 @@ export const Pricing = () => {
           Plan
         </span>
       </h2>
+
       <h3 className="text-xl text-center text-muted-foreground pt-4 pb-8">
         Flexible plans designed for students, researchers, and data enthusiasts.
       </h3>
@@ -94,15 +95,17 @@ export const Pricing = () => {
                 : ""
             }`}
           >
+            {/* Header */}
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 {pricing.title}
-                {pricing.popular === PopularPlanType.YES ? (
+                {pricing.popular === PopularPlanType.YES && (
                   <Badge variant="secondary" className="text-sm text-primary">
-                    Most popular
+                    Most Popular
                   </Badge>
-                ) : null}
+                )}
               </CardTitle>
+
               <div>
                 <span className="text-3xl font-bold">₹{pricing.price}</span>
                 <span className="text-muted-foreground"> /month</span>
@@ -111,18 +114,23 @@ export const Pricing = () => {
               <CardDescription>{pricing.description}</CardDescription>
             </CardHeader>
 
+            {/* Button */}
             <CardContent>
-              <Button className="w-full">{pricing.buttonText}</Button>
+              <Button className="w-full font-medium text-base">
+                {pricing.buttonText}
+              </Button>
             </CardContent>
 
-            <hr className="w-4/5 m-auto mb-4" />
+            {/* Divider */}
+            <hr className="w-4/5 m-auto mb-4 border-muted" />
 
+            {/* Benefits */}
             <CardFooter className="flex">
               <div className="space-y-4">
                 {pricing.benefitList.map((benefit: string) => (
-                  <span key={benefit} className="flex">
-                    <Check className="text-green-500" />{" "}
-                    <h3 className="ml-2">{benefit}</h3>
+                  <span key={benefit} className="flex items-center">
+                    <Check className="text-green-500 w-5 h-5" />
+                    <h3 className="ml-2 text-foreground">{benefit}</h3>
                   </span>
                 ))}
               </div>
