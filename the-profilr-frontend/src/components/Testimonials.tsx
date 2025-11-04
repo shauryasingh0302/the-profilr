@@ -33,7 +33,7 @@ export const Testimonials = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // <-- ADDED
+  const [successMessage, setSuccessMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -65,14 +65,14 @@ export const Testimonials = () => {
 
     if (!newReview.name || !newReview.comment || !newReview.role) {
       setError("Please fill in all required fields.");
-      setSuccessMessage(""); 
+      setSuccessMessage("");
       return;
     }
 
     try {
       setSubmitting(true);
       setError("");
-      setSuccessMessage(""); 
+      setSuccessMessage("");
 
       const response = await fetch(`${API_BASE_URL}/api/reviews`, {
         method: "POST",
@@ -87,14 +87,12 @@ export const Testimonials = () => {
         return;
       }
       
-      // SUCCESS HANDLING - This is the crucial block that needs to run cleanly
       setError(""); 
       setSuccessMessage("Review added successfully!"); 
       
       setEndorsements((prev) => [data.review, ...prev]);
       setNewReview({ name: "", role: "", comment: "" });
 
-      // Clear success message after a few seconds
       setTimeout(() => setSuccessMessage(""), 5000); 
 
     } catch (err) {
@@ -102,8 +100,7 @@ export const Testimonials = () => {
       setError("Unable to connect to the server.");
       setSuccessMessage("");
     } finally {
-      // Keep this for network errors, but ensure it's not fighting the success path
-      setSubmitting(false); 
+      setSubmitting(false);
     }
   };
 
@@ -122,7 +119,6 @@ export const Testimonials = () => {
         Profilr’s design and features.
       </p>
 
-      {/*Display states */}
       {loading ? (
         <p className="text-center text-muted-foreground">Loading reviews...</p>
       ) : error && endorsements.length === 0 ? (
@@ -154,7 +150,6 @@ export const Testimonials = () => {
         </div>
       )}
 
-      {/*Add Review Form */}
       <div className="mt-20">
         <Card className="max-w-2xl mx-auto border border-border shadow-sm">
           <CardHeader>
@@ -215,11 +210,16 @@ export const Testimonials = () => {
                 />
               </div>
 
-              {successMessage ? (
-                <p className="text-sm text-green-500 font-medium">{successMessage}</p>
-              ) : error && (
-                <p className="text-sm text-destructive font-medium">{error}</p>
+              {!submitting && (
+                  <>
+                      {successMessage ? (
+                          <p className="text-sm text-green-500 font-medium">{successMessage}</p>
+                      ) : error && (
+                          <p className="text-sm text-destructive font-medium">{error}</p>
+                      )}
+                  </>
               )}
+
 
               <Button
                 type="submit"
