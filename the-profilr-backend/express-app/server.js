@@ -16,19 +16,25 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow no-origin requests (Postman, same-site fetches)
-      if (!origin || allowedOrigins.includes(origin)) {
+    origin: (origin, callback) => {
+      if (
+        !origin ||
+        origin.includes("localhost:5173") ||
+        origin.includes("the-profilr.onrender.com")
+      ) {
         callback(null, true);
       } else {
         console.log("🚫 Blocked by CORS:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
     credentials: true,
   })
 );
+
+app.options("*", cors());
 
 app.use(express.json());
 
