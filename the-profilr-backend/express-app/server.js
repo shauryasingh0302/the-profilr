@@ -31,8 +31,8 @@ app.use(
   })
 );
 
+app.options("*", cors());
 app.use(express.json());
-
 await connectDB();
 
 app.get("/", (req, res) => {
