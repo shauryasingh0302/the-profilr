@@ -109,7 +109,7 @@ export const Testimonials = () => {
         Profilr’s design and features.
       </p>
 
-      {/* ✅ Display states */}
+      {/*Display states */}
       {loading ? (
         <p className="text-center text-muted-foreground">Loading reviews...</p>
       ) : error && endorsements.length === 0 ? (
@@ -141,7 +141,7 @@ export const Testimonials = () => {
         </div>
       )}
 
-      {/* ✅ Add Review Form */}
+      {/*Add Review Form */}
       <div className="mt-20">
         <Card className="max-w-2xl mx-auto border border-border shadow-sm">
           <CardHeader>
