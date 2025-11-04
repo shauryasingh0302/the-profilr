@@ -49,15 +49,21 @@ app.get("/api/reviews", async (req, res) => {
 app.post("/api/reviews", async (req, res) => {
   try {
     const { name, role, comment } = req.body;
+
     if (!name || !role || !comment) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    const review = await Review.create({ name, role, comment });
-    res.status(201).json({ message: "Review added", review });
-  } catch {
-    res.status(500).json({ message: "Server error" });
+
+    const review = new Review({ name, role, comment });
+    await review.save();
+
+    return res.status(201).json({ message: "Review added", review });
+  } catch (error) {
+    console.error("Error adding review:", error.message);
+    return res.status(500).json({ message: "Failed to add review", error: error.message });
   }
 });
+
 
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
