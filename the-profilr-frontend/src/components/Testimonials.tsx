@@ -84,7 +84,6 @@ export const Testimonials = () => {
         return;
       }
       
-      // FIX: Clear the error state explicitly on success
       setError(""); 
       
       setEndorsements((prev) => [data.review, ...prev]);
